@@ -68,7 +68,7 @@ export default function Dashboard() {
   return (
     <View style={styles.container}>
       <Playerlist teamName={'ABC'} players={Object.values(players)} selectedPlayer={selectedPlayer} onSelect={onSelect} />
-      <StatsButtons />
+      <StatsButtons selectedPlayer={selectedPlayer} />
       <Playerlist teamName={'DEF'} players={Object.values(rivalPlayers)} selectedPlayer={selectedPlayer} onSelect={onSelect} />
     </View>
   );
