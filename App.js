@@ -1,21 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { ScreenOrientation } from 'expo';
+import Dashboard from './src/components/Dashboard';
 
 export default function App() {
+  useEffect(() => {
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+  })
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-          <Text>Hello World</Text>
+    <View>
+      <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>
+      <Dashboard />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
