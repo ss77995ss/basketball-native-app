@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-function Player({ id, name, checkId, onSelect }) {
+function Player({ id, name, teamName, checkId, onSelect }) {
   return (
     <TouchableOpacity
-      onPress={() => onSelect(id)}
+      onPress={() => onSelect(id, name, teamName)}
       style={[
         styles.item,
         { backgroundColor: id === checkId ? '#bbffee' : '#00dd77' },
@@ -32,6 +32,7 @@ export default function Playerlist({ teamName, players, selectedPlayer, onSelect
           <Player
             id={item.id}
             name={item.name}
+            teamName={teamName}
             checkId={selectedPlayer}
             onSelect={onSelect}
           />

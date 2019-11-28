@@ -57,19 +57,33 @@ const rivalPlayers = {
 };
 
 export default function Dashboard() {
-  const [selectedPlayer, setSelectedPlayer] = React.useState('player1');
+  const [selectedPlayerInfo, setSelectedPlayerInfo] = React.useState({
+    id: players.player1.id,
+    name: players.player1.name,
+    teamName: 'ABC',
+  });
   const onSelect = React.useCallback(
-    id => {
-      setSelectedPlayer(id);
+    (id, name, teamName) => {
+      setSelectedPlayerInfo({ id, name, teamName });
     },
-    [selectedPlayer],
+    [selectedPlayerInfo],
   );
 
   return (
     <View style={styles.container}>
-      <Playerlist teamName={'ABC'} players={Object.values(players)} selectedPlayer={selectedPlayer} onSelect={onSelect} />
-      <StatsButtons selectedPlayer={selectedPlayer} />
-      <Playerlist teamName={'DEF'} players={Object.values(rivalPlayers)} selectedPlayer={selectedPlayer} onSelect={onSelect} />
+      <Playerlist
+        teamName={'ABC'}
+        players={Object.values(players)}
+        selectedPlayer={selectedPlayerInfo.id}
+        onSelect={onSelect}
+      />
+      <StatsButtons selectedPlayerInfo={selectedPlayerInfo} />
+      <Playerlist
+        teamName={'DEF'}
+        players={Object.values(rivalPlayers)}
+        selectedPlayer={selectedPlayerInfo.id}
+        onSelect={onSelect}
+      />
     </View>
   );
 }

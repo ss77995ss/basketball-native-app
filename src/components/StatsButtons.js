@@ -10,11 +10,11 @@ import {
 import { statsTitles } from '../constants/base';
 import { PlayByPlayContext } from '../context';
 
-export default function StatsButtons({ selectedPlayer }) {
+export default function StatsButtons({ selectedPlayerInfo }) {
   const { playByPlay, playDispatch } = React.useContext(PlayByPlayContext);
   const onPress = React.useCallback(
-    (stat, selectedPlayer) => {
-      playDispatch({ type: 'ADD_RECORD', player: selectedPlayer, stat });
+    (stat, { name, teamName}) => {
+      playDispatch({ type: 'ADD_RECORD', teamName, player: name, stat });
     },
     [playByPlay],
   );
@@ -22,7 +22,7 @@ export default function StatsButtons({ selectedPlayer }) {
   const renderButtons = Object.values(statsTitles).map(
     statTitle => (
       <View key={statTitle} style={styles.button}>
-        <Button color="#fff" title={statTitle} onPress={() => onPress(statTitle, selectedPlayer)} />
+        <Button color="#fff" title={statTitle} onPress={() => onPress(statTitle, selectedPlayerInfo)} />
       </View>
     )
   );
@@ -49,7 +49,11 @@ export default function StatsButtons({ selectedPlayer }) {
 };
 
 StatsButtons.propTypes = {
-  selectedPlayer: PropTypes.string.isRequired,
+  selectedPlayerInfo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    teamName: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const styles = StyleSheet.create({
