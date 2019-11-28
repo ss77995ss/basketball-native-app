@@ -5,8 +5,8 @@ import {
   View,
 } from 'react-native';
 import { ScreenOrientation } from 'expo';
-import { PlayByPlayContext } from './src/context';
-import { playByPlayReducer } from './src/reducers';
+import { ScoresContext, PlayByPlayContext } from './src/context';
+import { scoresReducer, playByPlayReducer } from './src/reducers';
 import Dashboard from './src/components/Dashboard';
 
 export default function App() {
@@ -14,14 +14,17 @@ export default function App() {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
   });
 
-  const [playState, playDispatch] = React.useReducer(playByPlayReducer, { playByPlay: [] });
+  const [scoresState, scoresDispatch] = React.useReducer(scoresReducer, { homeTeamScores: 0, awayTeamScores: 0});
+  const [playsState, playsDispatch] = React.useReducer(playByPlayReducer, { playByPlay: [] });
 
   return (
-    <PlayByPlayContext.Provider value={{ playByPlay: playState.playByPlay, playDispatch }}>
-      <View>
-        <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>
-        <Dashboard />
-      </View>
-    </PlayByPlayContext.Provider>
+    <ScoresContext.Provider value={{ homeTeamScores: scoresState.homeTeamScores, awayTeamScores: scoresState.awayTeamScores, scoresDispatch }}>
+      <PlayByPlayContext.Provider value={{ playByPlay: playsState.playByPlay, playsDispatch }}>
+        <View>
+          <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>
+          <Dashboard />
+        </View>
+      </PlayByPlayContext.Provider>
+    </ScoresContext.Provider>
   );
 }

@@ -60,7 +60,7 @@ export default function Dashboard() {
   const [selectedPlayerInfo, setSelectedPlayerInfo] = React.useState({
     id: players.player1.id,
     name: players.player1.name,
-    teamName: 'ABC',
+    teamName: 'HOME',
   });
   const onSelect = React.useCallback(
     (id, name, teamName) => {
@@ -72,14 +72,14 @@ export default function Dashboard() {
   return (
     <View style={styles.container}>
       <Playerlist
-        teamName={'ABC'}
+        teamName={'HOME'}
         players={Object.values(players)}
         selectedPlayer={selectedPlayerInfo.id}
         onSelect={onSelect}
       />
       <StatsButtons selectedPlayerInfo={selectedPlayerInfo} />
       <Playerlist
-        teamName={'DEF'}
+        teamName={'AWAY'}
         players={Object.values(rivalPlayers)}
         selectedPlayer={selectedPlayerInfo.id}
         onSelect={onSelect}

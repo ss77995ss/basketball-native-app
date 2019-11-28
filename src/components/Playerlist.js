@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import { ScoresContext } from '../context'
 
 function Player({ id, name, teamName, checkId, onSelect }) {
   return (
@@ -23,8 +24,12 @@ function Player({ id, name, teamName, checkId, onSelect }) {
 };
 
 export default function Playerlist({ teamName, players, selectedPlayer, onSelect }) {
+  const { homeTeamScores, awayTeamScores } = React.useContext(ScoresContext);
+  const scores = teamName === 'HOME' ? homeTeamScores : awayTeamScores;
+
   return (
     <View style={styles.playerList}>
+      <Text style={styles.scores}>{scores}</Text>
       <Text style={styles.title}>{teamName}</Text>
       <FlatList
         data={players}
@@ -54,6 +59,10 @@ Playerlist.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  scores: {
+    textAlign: 'center',
+    fontSize: 32,
+  },
   playerList: {
     flexBasis: '20%',
   },

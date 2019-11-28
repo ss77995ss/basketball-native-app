@@ -8,13 +8,31 @@ import {
   ScrollView,
 } from 'react-native';
 import { statsTitles } from '../constants/base';
-import { PlayByPlayContext } from '../context';
+import { ScoresContext, PlayByPlayContext } from '../context';
 
 export default function StatsButtons({ selectedPlayerInfo }) {
-  const { playByPlay, playDispatch } = React.useContext(PlayByPlayContext);
+  const { scoresDispatch } = React.useContext(ScoresContext);
+  const { playByPlay, playsDispatch } = React.useContext(PlayByPlayContext);
   const onPress = React.useCallback(
     (stat, { name, teamName}) => {
-      playDispatch({ type: 'ADD_RECORD', teamName, player: name, stat });
+      switch(stat) {
+        case statsTitles.twoPointsMade: {
+          console.log(stat);
+          scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 2 });
+          break;
+        }
+        case statsTitles.threePointsMade: {
+          scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 3 });
+          break;
+        }
+        case statsTitles.freeThrowMade: {
+          scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 1 });
+          break;
+        }
+        default: break;
+      }
+
+      playsDispatch({ type: 'ADD_RECORD', teamName, player: name, stat });
     },
     [playByPlay],
   );
