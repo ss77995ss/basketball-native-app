@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { ScoresContext } from '../context'
 
-function Player({ id, name, teamName, checkId, onSelect }) {
+function Player({ id, name, teamName, differences, checkId, onSelect }) {
   return (
     <TouchableOpacity
       onPress={() => onSelect(id, name, teamName)}
@@ -18,14 +18,15 @@ function Player({ id, name, teamName, checkId, onSelect }) {
         { backgroundColor: id === checkId ? '#bbffee' : '#00dd77' },
       ]}
     >
-      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.name}>{`${name}    ${differences}`}</Text>
     </TouchableOpacity>
   );
 };
 
 export default function Playerlist({ teamName, players, selectedPlayer, onSelect }) {
-  const { homeTeamScores, awayTeamScores } = React.useContext(ScoresContext);
+  const { homeTeamScores, homeTeamDifferences, awayTeamScores, awayTeamDifferences } = React.useContext(ScoresContext);
   const scores = teamName === 'HOME' ? homeTeamScores : awayTeamScores;
+  const differences = teamName === 'HOME' ? homeTeamDifferences : awayTeamDifferences;
 
   return (
     <View style={styles.playerList}>
@@ -38,6 +39,7 @@ export default function Playerlist({ teamName, players, selectedPlayer, onSelect
             id={item.id}
             name={item.name}
             teamName={teamName}
+            differences={differences}
             checkId={selectedPlayer}
             onSelect={onSelect}
           />

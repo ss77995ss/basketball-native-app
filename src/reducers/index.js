@@ -23,6 +23,26 @@ export function scoresReducer(state, action) {
           return state;
       }
     }
+    case 'MODIFY_DIFFERENCES': {
+      switch(action.teamName) {
+        case 'HOME': {
+          return {
+            ...state,
+            homeTeamDifferences: state.homeTeamDifferences + action.scores,
+            awayTeamDifferences: state.awayTeamDifferences - action.scores,
+          };
+        }
+        case 'AWAY': {
+          return {
+            ...state,
+            homeTeamDifferences: state.homeTeamDifferences - action.scores,
+            awayTeamDifferences: state.awayTeamDifferences + action.scores,
+          };
+        }
+        default:
+          return state;
+      }
+    }
     default: new Error();
   }
 }

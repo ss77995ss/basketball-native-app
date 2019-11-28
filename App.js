@@ -14,11 +14,19 @@ export default function App() {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
   });
 
-  const [scoresState, scoresDispatch] = React.useReducer(scoresReducer, { homeTeamScores: 0, awayTeamScores: 0});
+  const initialScoresState = {
+    homeTeamScores: 0,
+    homeTeamDifferences: 0,
+    awayTeamScores: 0,
+    awayTeamDifferences: 0,
+  };
+
+  const [scoresState, scoresDispatch] = React.useReducer(scoresReducer, initialScoresState);
   const [playsState, playsDispatch] = React.useReducer(playByPlayReducer, { playByPlay: [] });
 
+
   return (
-    <ScoresContext.Provider value={{ homeTeamScores: scoresState.homeTeamScores, awayTeamScores: scoresState.awayTeamScores, scoresDispatch }}>
+    <ScoresContext.Provider value={{...scoresState, scoresDispatch }}>
       <PlayByPlayContext.Provider value={{ playByPlay: playsState.playByPlay, playsDispatch }}>
         <View>
           <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>

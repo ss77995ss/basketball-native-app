@@ -19,14 +19,17 @@ export default function StatsButtons({ selectedPlayerInfo }) {
         case statsTitles.twoPointsMade: {
           console.log(stat);
           scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 2 });
+          scoresDispatch({ type: 'MODIFY_DIFFERENCES', teamName, scores: 2 });
           break;
         }
         case statsTitles.threePointsMade: {
           scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 3 });
+          scoresDispatch({ type: 'MODIFY_DIFFERENCES', teamName, scores: 3 });
           break;
         }
         case statsTitles.freeThrowMade: {
           scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 1 });
+          scoresDispatch({ type: 'MODIFY_DIFFERENCES', teamName, scores: 1 });
           break;
         }
         default: break;

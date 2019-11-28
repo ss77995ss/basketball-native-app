@@ -6,5 +6,7 @@ export const PlayByPlayContext = React.createContext({
 
 export const ScoresContext = React.createContext({
   homeTeamScores: 0,
+  homeTeamDifferences: 0,
   awayTeamScores: 0,
+  awayTeamDifferences: 0,
 })
