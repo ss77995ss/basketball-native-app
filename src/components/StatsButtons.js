@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import Button from './Button';
 import { statsTitles } from '../constants/base';
 import { ScoresContext, PlayByPlayContext } from '../context';
 
@@ -42,9 +42,13 @@ export default function StatsButtons({ selectedPlayerInfo }) {
 
   const renderButtons = Object.values(statsTitles).map(
     statTitle => (
-      <View key={statTitle} style={styles.button}>
-        <Button color="#fff" title={statTitle} onPress={() => onPress(statTitle, selectedPlayerInfo)} />
-      </View>
+      <Button
+        key={statTitle}
+        style={styles.button}
+        text={statTitle}
+        textStyle={styles.buttonText}
+        onPress={() => onPress(statTitle, selectedPlayerInfo)}
+      />
     )
   );
   const renderPlayByPlay = playByPlay.map((play, index) => (
@@ -53,6 +57,9 @@ export default function StatsButtons({ selectedPlayerInfo }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.timer}>
+        <Text>Timer</Text>
+      </View>
       <View style={styles.buttons}>
         {renderButtons}
       </View>
@@ -60,7 +67,7 @@ export default function StatsButtons({ selectedPlayerInfo }) {
         style={styles.playByPlay}
         ref={ref => this.scrollView = ref}
         onContentSizeChange={(contentWidth, contentHeight)=>{
-            this.scrollView.scrollToEnd({animated: true});
+          this.scrollView.scrollToEnd({animated: true});
         }}
       >
         {renderPlayByPlay}
@@ -80,21 +87,37 @@ StatsButtons.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flexBasis: '50%',
+    borderWidth: 4,
+    borderStyle: 'solid',
+    borderColor: '#ccc',
+  },
+  timer: {
+    height: '15%',
+    borderBottomWidth: 4,
+    borderBottomColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttons: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   button: {
-    marginVertical: 4,
+    margin: 4,
+    padding: 4,
     backgroundColor: '#5555ff',
     borderStyle: 'solid',
     borderRadius: 10,
   },
+  buttonText: {
+    fontSize: 16,
+    color: '#fff',
+  },
   playByPlay: {
     marginTop: 8,
-    maxHeight: '42%',
+    borderTopWidth: 4,
+    borderTopColor: '#ccc',
   },
   play: {
     textAlign: 'center',

@@ -67,6 +67,10 @@ const styles = StyleSheet.create({
   },
   playerList: {
     flexBasis: '20%',
+    borderWidth: 4,
+    borderStyle: 'solid',
+    borderColor: '#ccc',
+    height: '100%',
   },
   title: {
     textAlign: 'center',

@@ -94,5 +94,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
     justifyContent: 'space-around',
+    height: '95%',
   },
 });
