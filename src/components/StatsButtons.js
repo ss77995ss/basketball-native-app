@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Button from './Button';
+import PlayByPlay from './PlayByPlay';
 import { statsTitles } from '../constants/base';
 import { ScoresContext, PlayByPlayContext } from '../context';
 
@@ -17,7 +18,6 @@ export default function StatsButtons({ selectedPlayerInfo }) {
     (stat, { name, teamName}) => {
       switch(stat) {
         case statsTitles.twoPointsMade: {
-          console.log(stat);
           scoresDispatch({ type: 'INCREASE_SCORES', teamName, scores: 2 });
           scoresDispatch({ type: 'MODIFY_DIFFERENCES', teamName, scores: 2 });
           break;
@@ -51,9 +51,6 @@ export default function StatsButtons({ selectedPlayerInfo }) {
       />
     )
   );
-  const renderPlayByPlay = playByPlay.map((play, index) => (
-    <Text key={`${play}-${index}`} style={styles.play}>{play}</Text>
-  ));
 
   return (
     <View style={styles.container}>
@@ -63,15 +60,7 @@ export default function StatsButtons({ selectedPlayerInfo }) {
       <View style={styles.buttons}>
         {renderButtons}
       </View>
-      <ScrollView
-        style={styles.playByPlay}
-        ref={ref => this.scrollView = ref}
-        onContentSizeChange={(contentWidth, contentHeight)=>{
-          this.scrollView.scrollToEnd({animated: true});
-        }}
-      >
-        {renderPlayByPlay}
-      </ScrollView>
+      <PlayByPlay data={playByPlay} />
     </View>
   )
 };
@@ -113,14 +102,5 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: '#fff',
-  },
-  playByPlay: {
-    marginTop: 8,
-    borderTopWidth: 4,
-    borderTopColor: '#ccc',
-  },
-  play: {
-    textAlign: 'center',
-    fontSize: 16,
   },
 });

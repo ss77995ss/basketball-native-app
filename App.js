@@ -20,14 +20,16 @@ export default function App() {
     awayTeamScores: 0,
     awayTeamDifferences: 0,
   };
+  const initialPlayByPlayState = {
+    playByPlay: [],
+  }
 
   const [scoresState, scoresDispatch] = React.useReducer(scoresReducer, initialScoresState);
-  const [playsState, playsDispatch] = React.useReducer(playByPlayReducer, { playByPlay: [] });
-
+  const [playsState, playsDispatch] = React.useReducer(playByPlayReducer, initialPlayByPlayState);
 
   return (
-    <ScoresContext.Provider value={{...scoresState, scoresDispatch }}>
-      <PlayByPlayContext.Provider value={{ playByPlay: playsState.playByPlay, playsDispatch }}>
+    <ScoresContext.Provider value={{ ...scoresState, scoresDispatch }}>
+      <PlayByPlayContext.Provider value={{ ...playsState, playsDispatch }}>
         <View>
           <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>
           <Dashboard />

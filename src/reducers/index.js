@@ -1,8 +1,20 @@
 export function playByPlayReducer(state, action) {
   switch(action.type) {
     case 'ADD_RECORD': {
-      const play = `${action.teamName} ${action.player} ${action.stat}`;
-      return { playByPlay: state.playByPlay.concat(play) };
+      const play = `${action.player} ${action.stat}`;
+
+      switch(action.teamName) {
+        case 'HOME':
+          return {
+            playByPlay: state.playByPlay.concat({ home: play, away: '' }),
+          };
+        case 'AWAY':
+          return {
+            playByPlay: state.playByPlay.concat({ home: '', away: play }),
+          };
+        default:
+          throw new Error();
+      }
     }
     default:
       throw new Error();
