@@ -8,8 +8,10 @@ import {
 } from 'react-native';
 import Button from './Button';
 import PlayByPlay from './PlayByPlay';
+import Timer from './Timer';
 import { statsTitles } from '../constants/base';
 import { ScoresContext, PlayByPlayContext } from '../context';
+import { TimerProvider } from '../context/timerContext';
 
 export default function StatsButtons({ selectedPlayerInfo }) {
   const { scoresDispatch } = React.useContext(ScoresContext);
@@ -53,16 +55,16 @@ export default function StatsButtons({ selectedPlayerInfo }) {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.timer}>
-        <Text>Timer</Text>
+    <TimerProvider>
+      <View style={styles.container}>
+        <Timer />
+        <View style={styles.buttons}>
+          {renderButtons}
+        </View>
+        <PlayByPlay data={playByPlay} />
       </View>
-      <View style={styles.buttons}>
-        {renderButtons}
-      </View>
-      <PlayByPlay data={playByPlay} />
-    </View>
-  )
+    </TimerProvider>
+  );
 };
 
 StatsButtons.propTypes = {
@@ -79,13 +81,6 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderStyle: 'solid',
     borderColor: '#ccc',
-  },
-  timer: {
-    height: '15%',
-    borderBottomWidth: 4,
-    borderBottomColor: '#ccc',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   buttons: {
     flexDirection: 'row',
