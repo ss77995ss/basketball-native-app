@@ -13,3 +13,10 @@ export const statsTitles = {
   turnovers: 'TO',
   fouls: 'FOUL',
 };
+
+export const quarters = {
+  firstQuarter: '1st',
+  secondQuarter: '2nd',
+  thirdQuarter: '3rd',
+  fourthQuarter: '4th',
+}

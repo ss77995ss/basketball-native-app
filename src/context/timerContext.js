@@ -7,19 +7,24 @@ function timerReducer(state, action) {
   switch(action.type) {
     case 'INCREASE_TIMES': {
       return {
+        ...state,
         times: state.times + action.times,
       };
     }
     case 'DECREASE_TIMES': {
       if (state.times - action.times < 0) {
-        return { times: 0 };
+        return { ...state, times: 0 };
       }
       return {
+        ...state,
         times: state.times - action.times,
       };
     }
     case 'RESET_TIMES': {
-      return { times: action.times }
+      return { ...state, times: action.times };
+    }
+    case 'SET_QUARTER': {
+      return { ...state, quarter: action.quarter };
     }
     default: new Error('Timer reducer error: Missing action');
   }
@@ -28,7 +33,10 @@ function timerReducer(state, action) {
 function TimerProvider({ children }) {
   const [state, dispatch] = React.useReducer(
     timerReducer,
-    { times: 1000 * 60 * 10 },
+    {
+      times: 1000 * 60 * 10,
+      quarter: '1st',
+    },
   );
 
   return (
