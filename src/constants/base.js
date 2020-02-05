@@ -7,7 +7,7 @@ export const statsTitles = {
   freeThrowMiss: 'FT-MISS',
   offensiveRebounds: 'OFF-REB',
   defensiveRebounds: 'DEF-REB',
-  assists: 'ASS',
+  assists: 'AST',
   steals: 'STL',
   blocks: 'BLK',
   turnovers: 'TO',
