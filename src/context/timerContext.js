@@ -5,10 +5,21 @@ const TimerDispatchContext = React.createContext();
 
 function timerReducer(state, action) {
   switch(action.type) {
-    case 'DECREASE_ONE_SECOND': {
+    case 'INCREASE_TIMES': {
       return {
-        times: state.times - 10,
+        times: state.times + action.times,
       };
+    }
+    case 'DECREASE_TIMES': {
+      if (state.times - action.times < 0) {
+        return { times: 0 };
+      }
+      return {
+        times: state.times - action.times,
+      };
+    }
+    case 'RESET_TIMES': {
+      return { times: action.times }
     }
     default: new Error('Timer reducer error: Missing action');
   }
