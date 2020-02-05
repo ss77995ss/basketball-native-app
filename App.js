@@ -5,8 +5,10 @@ import {
   View,
 } from 'react-native';
 import { ScreenOrientation } from 'expo';
-import { ScoresContext, PlayByPlayContext } from './src/context';
-import { scoresReducer, playByPlayReducer } from './src/reducers';
+import { ScoresContext } from './src/context';
+import { PlayByPlayProvider } from './src/context/playByPlay';
+import { TimerProvider } from './src/context/timer';
+import { scoresReducer } from './src/reducers';
 import Dashboard from './src/components/Dashboard';
 
 export default function App() {
@@ -20,21 +22,19 @@ export default function App() {
     awayTeamScores: 0,
     awayTeamDifferences: 0,
   };
-  const initialPlayByPlayState = {
-    playByPlay: [],
-  }
 
   const [scoresState, scoresDispatch] = React.useReducer(scoresReducer, initialScoresState);
-  const [playsState, playsDispatch] = React.useReducer(playByPlayReducer, initialPlayByPlayState);
 
   return (
     <ScoresContext.Provider value={{ ...scoresState, scoresDispatch }}>
-      <PlayByPlayContext.Provider value={{ ...playsState, playsDispatch }}>
-        <View>
-          <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>
-          <Dashboard />
-        </View>
-      </PlayByPlayContext.Provider>
+      <PlayByPlayProvider>
+        <TimerProvider>
+          <View>
+            <Text style={{ textAlign: 'center' }}>Hello World!!!</Text>
+            <Dashboard />
+          </View>
+        </TimerProvider>
+      </PlayByPlayProvider>
     </ScoresContext.Provider>
   );
 }

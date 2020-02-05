@@ -10,12 +10,15 @@ import Button from './Button';
 import PlayByPlay from './PlayByPlay';
 import Timer from './Timer';
 import { statsTitles } from '../constants/base';
-import { ScoresContext, PlayByPlayContext } from '../context';
-import { TimerProvider } from '../context/timerContext';
+import { ScoresContext } from '../context';
+import { usePlayByPlayState, usePlayByPlayDispatch } from '../context/playByPlay';
+import { useTimerState } from '../context/timer';
 
 export default function StatsButtons({ selectedPlayerInfo }) {
   const { scoresDispatch } = React.useContext(ScoresContext);
-  const { playByPlay, playsDispatch } = React.useContext(PlayByPlayContext);
+  const { times } = useTimerState();
+  const { playByPlay } = usePlayByPlayState();
+  const playsDispatch = usePlayByPlayDispatch();
   const onPress = React.useCallback(
     (stat, { name, teamName}) => {
       switch(stat) {
@@ -37,9 +40,15 @@ export default function StatsButtons({ selectedPlayerInfo }) {
         default: break;
       }
 
-      playsDispatch({ type: 'ADD_RECORD', teamName, player: name, stat });
+      playsDispatch({
+        type: 'ADD_RECORD',
+        teamName,
+        player: name,
+        stat,
+        time: times,
+      });
     },
-    [playByPlay],
+    [times],
   );
 
   const renderButtons = Object.values(statsTitles).map(
@@ -55,15 +64,13 @@ export default function StatsButtons({ selectedPlayerInfo }) {
   );
 
   return (
-    <TimerProvider>
-      <View style={styles.container}>
-        <Timer />
-        <View style={styles.buttons}>
-          {renderButtons}
-        </View>
-        <PlayByPlay data={playByPlay} />
+    <View style={styles.container}>
+      <Timer />
+      <View style={styles.buttons}>
+        {renderButtons}
       </View>
-    </TimerProvider>
+      <PlayByPlay data={playByPlay} />
+    </View>
   );
 };
 

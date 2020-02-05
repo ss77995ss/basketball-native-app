@@ -4,21 +4,15 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import { displayTimer } from '../utils'
 import { quarters } from '../constants/base';
-import { useTimerState, useTimerDispatch } from '../context/timerContext';
+import { useTimerState, useTimerDispatch } from '../context/timer';
 import Button from './Button';
 
 export default function Timer() {
   const { times, quarter } = useTimerState();
   const dispatch = useTimerDispatch();
   const [timerOn, setTimerOn] = React.useState(false);
-
-  const displayTimer = (timesLeft) => {
-    const minutes = `0${Math.floor((timesLeft / 1000 / 60) % 60)}`.slice(-2);
-    const seconds = `0${Math.floor((timesLeft / 1000) % 60)}`.slice(-2);
-
-    return `${minutes}:${seconds}`
-  };
 
   const quarterButtons = () => Object.values(quarters).map(qtr => (
     <Button
